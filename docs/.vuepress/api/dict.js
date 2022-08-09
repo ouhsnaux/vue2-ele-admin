@@ -8,11 +8,11 @@ const fetchOptions = (codes) =>
 // 待请求队列
 let toFetch = [];
 // 请求中队列
-let fetching = [];
+const globalFetching = [];
 
 // 订阅队列
-let resolves = [];
-let rejects = [];
+const resolves = {};
+const rejects = {};
 
 // 定时器
 let timeout;
@@ -27,9 +27,10 @@ const maxLength = 10;
 
 // 批量查询
 const batchFetch = () => {
-  // 队列交接，清空排队队列
-  fetching = toFetch;
-  toFetch = [];
+  // 队列交接，将适量的数据放入请求中队列
+  const fetching = toFetch.slice(0, maxLength);
+  toFetch = toFetch.slice(maxLength);
+  globalFetching.push(fetching);
 
   // TODO 修改url
   fetchOptions(fetching.join(','))
@@ -37,27 +38,29 @@ const batchFetch = () => {
       // 存储结果
       Object.keys(data).forEach((key) => {
         optionsMap[key] = data[key];
+        // 发布成功通知
+        resolves[key].forEach((resolve) => resolve());
       });
-
-      // 发布成功通知
-      resolves.forEach((resolve) => resolve());
     })
     .catch(() => {
       // 发布失败通知
-      rejects.forEach((reject) => reject());
+      fetching.forEach((key) => {
+        rejects[key].forEach((reject) => reject());
+      });
     })
     .finally(() => {
-      // 清空订阅队列
-      resolves = [];
-      rejects = [];
+      fetching.forEach((key) => {
+        // 清空订阅队列
+        resolves[key] = [];
+        rejects[key] = [];
 
-      // 释放内存
-      fetching.forEach((code) => {
-        delete optionsMap[code];
+        // 释放内存
+        delete optionsMap[key];
       });
 
-      // 清空请求中队列
-      fetching = [];
+      // 删除全局请求中队列
+      const index = globalFetching.find((item) => item === fetching);
+      globalFetching.splice(index, 1);
     });
 };
 
@@ -69,11 +72,13 @@ export const getOptions = (code) => {
   }
   return new Promise((resolve, reject) => {
     // 消息订阅
-    resolves.push(resolve);
-    rejects.push(reject);
+    resolves[code] ||= [];
+    rejects[code] ||= [];
+    resolves[code].push(resolve);
+    rejects[code].push(reject);
 
     // 不重复排队
-    if (fetching.includes(code) || toFetch.includes(code)) {
+    if (globalFetching.some((item) => item.includes(code)) || toFetch.includes(code)) {
       return;
     }
 
