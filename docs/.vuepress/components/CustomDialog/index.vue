@@ -16,7 +16,7 @@ export default {
   mixins: [visible],
   inheritAttrs: false,
   props: {
-    onOk: { type: Function, default: null },
+    onOk: { type: Function, default: () => {} },
     footerHide: { type: Boolean, default: false },
   },
   data() {
@@ -29,12 +29,8 @@ export default {
       this.show = false;
     },
     confirm() {
-      if (!this.onOk) {
-        this.close();
-        return;
-      }
       this.loading = true;
-      this.onOk()
+      Promise.resolve(this.onOk())
         .then(() => {
           this.close();
         })

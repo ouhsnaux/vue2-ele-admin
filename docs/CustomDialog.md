@@ -4,7 +4,39 @@
 
 ## 基本用法
 
-传递 `onOk` 属性，是一个返回 `promise` 的函数。
+点击确定执行 `onOk` 属性，接收一个函数
+
+::: demo
+```html
+<template>
+  <div>
+    <el-button @click="open">打开</el-button>
+    <CustomDialog v-model="visible" title="提示">这是一段信息</CustomDialog>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      visible: false,
+    };
+  },
+  methods: {
+    open() {
+      this.visible = true;
+    },
+    onOk() {
+      console.log('确认');
+    },
+  },
+};
+</script>
+```
+:::
+
+## 异步关闭
+
+若想异步关闭，只需修改 `onOk` 函数返回 `Promise`
 
 ::: demo
 ```html
@@ -26,9 +58,13 @@ export default {
       this.visible = true;
     },
     onOk() {
-      console.log('确认');
-      return Promise.resolve();
-    }
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log('确认');
+          resolve();
+        }, 2000);
+      });
+    },
   },
 };
 </script>
