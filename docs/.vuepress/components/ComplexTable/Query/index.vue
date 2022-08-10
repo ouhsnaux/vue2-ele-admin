@@ -1,5 +1,4 @@
 <template>
-  <!-- @submit.prevent 避免回车导致页面刷新 -->
   <div v-if="fields.length > 0 || extra.length > 0" class="query">
     <template v-if="fields.length > 0">
       <CustomForm :fields="fields" :data="data" inline :label-width="labelWidth">
