@@ -10,6 +10,7 @@
 
 <script>
 import CustomColumn from './CustomColumn';
+import { getColumnSlots } from './index.js';
 
 export default {
   name: 'CustomTable',
@@ -28,19 +29,7 @@ export default {
       this.$refs.table.clearSelection();
     },
     getColumnSlots(column) {
-      let result = [];
-      if (column.slotName) {
-        result.push(column.slotName);
-      }
-      if (column.headerSlotName) {
-        result.push(column.headerSlotName);
-      }
-      if (column.children) {
-        column.children.forEach((child) => {
-          result = result.concat(this.getColumnSlots(child));
-        });
-      }
-      return result;
+      return getColumnSlots(column);
     },
   },
 };

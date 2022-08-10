@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { getColumnSlots } from './index.js';
+
 export default {
   name: 'CustomColumn',
   components: {},
@@ -32,19 +34,7 @@ export default {
   created() {},
   methods: {
     getColumnSlots(column) {
-      let result = [];
-      if (column.slotName) {
-        result.push(column.slotName);
-      }
-      if (column.headerSlotName) {
-        result.push(column.headerSlotName);
-      }
-      if (column.children) {
-        column.children.forEach((child) => {
-          result = result.concat(this.getColumnSlots(child));
-        });
-      }
-      return result;
+      return getColumnSlots(column);
     },
   },
 };
