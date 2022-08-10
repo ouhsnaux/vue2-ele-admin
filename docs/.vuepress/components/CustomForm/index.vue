@@ -66,19 +66,12 @@ export default {
       if (!prop) {
         return data;
       }
-      // 不存在 . 表示是最后一级，不需要深度遍历
-      if (!prop.includes('.')) {
-        return data[prop];
-      }
-      const propArr = prop.split('.');
-      let result = data;
-      propArr.forEach((item) => {
-        if (!result) {
+      return prop.split('.').reduce((acc, cur) => {
+        if (!acc) {
           throw new Error('请确保表单prop路径正确，且传递了正确的初始值。');
         }
-        result = result[item];
-      });
-      return result;
+        return acc[cur];
+      }, data);
     },
     change(val, prop) {
       // 深度修改

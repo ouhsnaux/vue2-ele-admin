@@ -13,16 +13,14 @@ export default {
   watch: {
     value(value) {
       if (value) {
-        if (this.beforeShow) {
-          this.beforeShow();
-        }
-      } else if (this.afterClose) {
-        this.afterClose();
+        this.beforeShow();
+      } else {
+        this.beforeClose();
       }
     },
   },
   methods: {
     beforeShow() {},
-    afterClose() {},
+    beforeClose() {},
   },
 };

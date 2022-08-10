@@ -67,7 +67,7 @@ export default {
     beforeShow() {
       this.refreshData();
     },
-    afterClose() {
+    beforeClose() {
       this.setData(getDefaultData(this.fields));
       this.$refs.form.resetFields();
     },
