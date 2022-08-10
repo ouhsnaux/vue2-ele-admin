@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { debounce } from '@/utils/_';
+
 export default {
   name: 'InfiniteScrollList',
   components: {},
@@ -63,7 +65,14 @@ export default {
     },
   },
   mounted() {
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', this.reset());
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
+    window.removeEventListener('resize', this.reset());
+  },
+  methods: {
+    reset: debounce(function () {
       clearInterval(this.interval);
       this.$refs.container.scrollTop = 0;
       this.localData = [...this.data];
@@ -76,12 +85,7 @@ export default {
           this.scrollFirstToBottom();
         }
       });
-    });
-  },
-  beforeDestroy() {
-    clearInterval(this.interval);
-  },
-  methods: {
+    }, 500),
     updateScroll() {
       const { scrollHeight, clientHeight } = this.$refs.container;
       this.hasScroll = scrollHeight > clientHeight;
