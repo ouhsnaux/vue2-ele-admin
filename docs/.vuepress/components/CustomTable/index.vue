@@ -10,7 +10,7 @@
 
 <script>
 import CustomColumn from './CustomColumn';
-import { getColumnSlots } from './index.js';
+import { getColumnSlots } from './utils';
 
 export default {
   name: 'CustomTable',

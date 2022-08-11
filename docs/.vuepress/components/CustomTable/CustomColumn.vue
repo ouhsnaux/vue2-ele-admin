@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { getColumnSlots } from './index.js';
+import { getColumnSlots } from './utils';
 
 export default {
   name: 'CustomColumn',
