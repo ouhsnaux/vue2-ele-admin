@@ -2,14 +2,16 @@
 
 组装表格及分页。
 
+接收 `buttons` 作为操作列配置。
+
+提供布局功能，空间不足时滚动条出现在表格内部。
+
 ## 基础用法
 
 ::: demo
 ```html
 <template>
   <ComplexTableContent
-    index
-    selection
     :columns="columns"
     :data="computedData"
     :buttons="buttons"
@@ -97,6 +99,8 @@ export default {
     ];
     return {
       columns: [
+        { type: 'selection', width: 40, align: 'center' },
+        { type: 'index', width: 40, index: 1, align: 'center' },
         { prop: 'date', label: '日期', width: 100, align: 'center' },
         { prop: 'name', label: '姓名', width: 120 },
         { prop: 'address', label: '地址' },
@@ -148,10 +152,8 @@ export default {
 ```html
 <template>
   <ComplexTableContent
-    index
-    selection
     :columns="columns"
-    :data="computedData"
+    :data="data"
     :buttons="buttons"
     :pagination="pagination"
     class="scroll-table"
@@ -190,6 +192,31 @@ export default {
         name: '王小虎5',
         address: '上海市普陀区金沙江路 1518 弄',
       },
+      {
+        date: '2016-05-02',
+        name: '王小虎6',
+        address: '上海市普陀区金沙江路 1518 弄',
+      },
+      {
+        date: '2016-05-02',
+        name: '王小虎7',
+        address: '上海市普陀区金沙江路 1518 弄',
+      },
+      {
+        date: '2016-05-02',
+        name: '王小虎8',
+        address: '上海市普陀区金沙江路 1518 弄',
+      },
+      {
+        date: '2016-05-02',
+        name: '王小虎9',
+        address: '上海市普陀区金沙江路 1518 弄',
+      },
+      {
+        date: '2016-05-02',
+        name: '王小虎10',
+        address: '上海市普陀区金沙江路 1518 弄',
+      },
     ];
     return {
       columns: [
@@ -208,13 +235,6 @@ export default {
         total: data.length,
       },
     };
-  },
-  computed: {
-    computedData() {
-      const { pageNum, pageSize } = this.pagination;
-      const start = (pageNum - 1) * pageSize;
-      return this.data.slice(start, start + pageSize);
-    },
   },
   created() {},
   methods: {
@@ -244,16 +264,13 @@ export default {
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | :-- | :-- | :-- | :-- | :-- |
 | loading | 是否加载中 | boolean |  | false |
-| index | 是否需要序号 | boolean |  | false |
-| selection | 能否需要多选 | boolean |  | false |
-| selectable | 计算当前行是否含有复选框 | Function(row, index) |  |  |
 | columns | 当前列配置，同[CustomTable](../CustomTable.md#attribute) | array |  |  |
 | data | 表格数据 | array |  |  |
 | buttons | 表格中的操作，详情见下方 | array |  | [] |
 | buttonWidth | 表格宽度，默认自动计算宽度，如果显示不正确需要指定  | string |  |  |
 | tableKey | 表格的key属性，可以通过控制该属性重载表格 | string |  |  |
 | pagination | 分页，详情见下方 | object |  |  |
-| scroll | 表格是否需要滚动，给表格设置高度时滚动条出现在表格内部，分页出现在最底部 | boolean |  | true |
+| scrollable | 表格是否需要滚动，给表格设置高度时滚动条出现在表格内部，分页出现在最底部 | boolean |  | true |
 
 ## Events
 

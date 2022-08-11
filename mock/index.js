@@ -1,5 +1,6 @@
 import config from '@/config/index';
 import { nanoid } from 'nanoid';
+import qs from 'qs';
 
 const Mock = require('mockjs');
 
@@ -127,4 +128,24 @@ Mock.mock(wrapUrl('prize'), 'delete', (params) => {
   prizeList.splice(index, 1);
   prizeTotal -= 1;
   return wrap({});
+});
+
+Mock.mock(wrapUrl('dict'), 'get', (params) => {
+  console.log(params);
+  const [, param] = params.url.split('?');
+  const { codes } = qs.parse(param);
+  const keys = codes.split(',');
+  return wrap(
+    keys.reduce((acc, cur) => {
+      acc[cur] = Mock.mock({
+        [`rows|10`]: [
+          {
+            value: '@id',
+            label: '@ctitle(3, 5)',
+          },
+        ],
+      }).rows;
+      return acc;
+    }, {})
+  );
 });

@@ -36,7 +36,7 @@
           <i v-if="row[column.property] === '1'" class="el-icon-check icon check"></i>
           <i v-else class="el-icon-close icon close"></i>
         </template>
-        <template v-if="buttons && buttons.length > 0" #buttons="{ row }">
+        <template v-if="buttons && buttons.length > 0" #_buttons="{ row }">
           <ul class="operation">
             <template v-for="button in buttons">
               <li
@@ -74,63 +74,44 @@
 
 <script>
 import CustomTable from '@/components/CustomTable';
-import { COLUMN_WIDTH_INDEX, COLUMN_WIDTH_SELECTION } from '@/const/table';
 
 export default {
   name: 'ComplexTableContent',
   components: { CustomTable },
   inheritAttrs: false,
   props: {
-    extra: { type: Array, default: () => [] }, // 表格上方操作
-
+    // extra: { type: Array, default: () => [] }, // 表格上方操作
     loading: { type: Boolean, default: false },
-
-    index: { type: Boolean, default: false }, // 是否需要序号
-    selection: { type: Boolean, default: false }, // 能否多选
-    selectable: { type: Function, default: null }, // 判断是否可选中
     columns: { type: Array, default: () => [] },
     data: { type: Array, default: () => [] },
     buttons: { type: Array, default: () => [] }, // 表格内操作
-    buttonWidth: { type: Number, default: null }, // 操作宽度
-    tableKey: { type: String, default: '' },
+    buttonWidth: { type: Number, default: null }, // 操作列宽度
+    tableKey: { type: String, default: '' }, // 通过设置key reload表格
 
     pagination: { type: Object, default: null },
-    scroll: { type: Boolean, default: true }, // 整屏布局
+    scrollable: { type: Boolean, default: true }, // 是否整屏布局，滚动条出现在表格内部
   },
   data() {
     return {
-      multipleSelection: [],
       maxHeight: 'auto',
     };
   },
   computed: {
     realColumns() {
       const result = [...this.columns];
-      if (this.index) {
-        result.unshift({ type: 'index', width: COLUMN_WIDTH_INDEX, index: 1, align: 'center' });
-      }
-      if (this.selection) {
-        result.unshift({
-          type: 'selection',
-          width: COLUMN_WIDTH_SELECTION,
-          selectable: this.calcSelectable,
-          align: 'center',
-        });
-      }
       if (this.buttons && this.buttons.length > 0) {
         result.push({
           prop: 'buttons',
           label: '操作',
-          fixed: 'right',
           align: 'center',
-          width: this.buttonWidth || Math.max(this.buttons.length * 28 + 24, 60),
-          slotName: 'buttons',
+          width: this.buttonWidth || this.buttons.length * 28 + 24,
+          slotName: '_buttons',
         });
       }
       return result;
     },
     slots() {
-      return this.realColumns.map((item) => item.slotName).filter((item) => !!item);
+      return this.columns.map((item) => item.slotName).filter((item) => !!item);
     },
   },
   mounted() {
@@ -147,7 +128,7 @@ export default {
       });
     },
     setTableMaxHeight() {
-      if (!this.scroll) {
+      if (!this.scrollable) {
         this.maxHeight = 'auto';
         return;
       }
@@ -162,17 +143,10 @@ export default {
       this.maxHeight = result - 20;
     },
     handleSelectionChange(val) {
-      this.multipleSelection = val;
       this.$emit('selection-change', val);
     },
     clearSelection() {
       this.$refs.table.clearSelection();
-    },
-    calcSelectable(row, index) {
-      if (!this.selectable || typeof this.selectable !== 'function') {
-        return true;
-      }
-      return this.selectable(row, index);
     },
     action(type, detail) {
       this.$emit('action', type, detail);

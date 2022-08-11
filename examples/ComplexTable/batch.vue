@@ -20,13 +20,18 @@ export default {
         fields: [new SimpleInput({ prop: 'name', label: '名字' })],
       },
       content: {
-        selection: true,
         extra: [
           { key: 'add', icon: 'el-icon-plus', name: '新增', type: 'primary' },
           { key: 'batchDelete', icon: 'el-icon-delete', name: '删除', type: 'danger' },
         ],
         data: [],
         columns: [
+          {
+            type: 'selection',
+            width: 40,
+            align: 'center',
+            selectable: (row, index) => index % 2 === 0,
+          },
           { prop: 'date', label: '日期', width: 100, align: 'center' },
           { prop: 'name', label: '姓名', width: 120 },
           { prop: 'address', label: '地址' },

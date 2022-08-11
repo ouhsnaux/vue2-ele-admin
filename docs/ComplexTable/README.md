@@ -1,8 +1,10 @@
 # ComplexTable
 
+集成**请求数据，筛选，翻页，自定义操作**功能
+
 ## 基础用法
 
-可从路由中获取初始参数，尝试在 `url` 中添加 `name` 参数并刷新页面。
+可从路由中获取初始参数，尝试在 `url` 中添加 `name` 参数并刷新页面。点击[此处](./?name=小凡)添加参数
 
 <div class="demo-content">
   <ComplexTableBase />
@@ -22,7 +24,7 @@
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | :-- | :-- | :-- | :-- | :-- |
-| baseurl | 增删改查基础地址，必填 | string |  |  |
+| baseurl | 查询接口url，必填 | string |  |  |
 | params | 筛选项配置，见下方params | object |  |  |
 | content | 表格配置，见下方content | object |  |  |
 | handle-params | 上传前参数处理 | function |  | (params) => params |
@@ -32,7 +34,7 @@
 
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | :-- | :-- | :-- | :-- | :-- |
-| fields | 筛选项，同[CustomForm Attributes](../CustomForm.md#form-attributes) | array |  |  |
+| fields | 筛选项，同[CustomForm Attributes](../CustomForm.md#form-attributes)，已封装了[工具类](../CustomFormUtils.md) | array |  |  |
 | data | 筛选参数的值 | object |  |  |
 
 ### content
@@ -68,7 +70,7 @@
 
 | 插槽名 | 说明 | 参数 |
 | :-- | :-- | :-- |
-|  | 筛选表单插槽，与筛选表单配置 `slotName` 对应 | { row, column, $index } |
-|  | 批量操作插槽，与批量操作按钮配置 `slotName` 对应 | { row, column, $index } |
-|  | 表格列插槽，与列配置 `slotName` 对应 | { row, column, $index } |
-|  | 操作插槽，与按钮配置 `slotName` 对应 | row |
+| 筛选表单插槽 | 与筛选表单配置 `slotName` 对应 | { row, column, $index } |
+| 批量操作插槽 | 与批量操作按钮配置 `slotName` 对应 | { row, column, $index } |
+| 表格列插槽 | 与列配置 `slotName` 对应 | { row, column, $index } |
+| 操作插槽 | 与按钮配置 `slotName` 对应 | row |

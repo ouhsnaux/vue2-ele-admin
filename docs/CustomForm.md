@@ -345,7 +345,7 @@ export default {
 | :--: | :-- | :-- | :-- | :-- | :-- |
 | ✔️ | data | 表单数据对象，原 `model` | object |  |  |
 | ❌ | model | 迁移到 `data` |  |  |  |
-| ✔️ | fields | 表单项配置，包含 `props` 和 `input`两个属性，详情见下方 | array |  |  |
+| ✔️ | fields | 表单项配置，包含 `props` 和 `input`两个属性，详情见下方，项目中还封装了[工具类](./CustomFormUtils.md) 来生成 `fields` | array |  |  |
 
 其它同[Element UI Form Attributes](https://element.eleme.cn/#/zh-CN/component/form#form-attributes)
 

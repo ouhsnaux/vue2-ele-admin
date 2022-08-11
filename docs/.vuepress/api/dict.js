@@ -1,9 +1,6 @@
-// MOCK
-const fetchOptions = (codes) =>
-  codes.reduce((acc, cur) => {
-    acc[cur] = [{ label: '第一个', value: '1' }];
-    return acc;
-  }, {});
+import request from '@/services/request';
+
+const fetchOptions = (codes) => request.get('dict', { params: { codes } });
 
 // 待请求队列
 let toFetch = [];

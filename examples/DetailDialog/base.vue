@@ -38,7 +38,7 @@ export default {
       type: '',
       data: {},
       fields: [
-        new SimpleInput({ prop: 'name', label: '姓名' }),
+        new SimpleInput({ prop: 'name', label: '姓名', required: true }),
         new SelectInput({
           prop: 'province',
           label: '省份',
@@ -49,8 +49,15 @@ export default {
             { label: '广州', value: 'guangzhou' },
             { label: '深圳', value: 'shenzhen' },
           ],
+          required: true,
         }),
-        new DateInput({ prop: 'birthday', label: '出生年月' }),
+        new DateInput({
+          prop: 'birthday',
+          label: '出生年月',
+          input: {
+            pickerOptions: DateInput.before,
+          },
+        }),
         new SwitchInput({ prop: 'adult', label: '是否成年' }),
         new CheckboxInput({
           prop: 'food',
@@ -62,6 +69,10 @@ export default {
             { value: '选项4', label: '龙须面' },
             { value: '选项5', label: '北京烤鸭' },
           ],
+          required: true,
+          props: {
+            rules: [{ validator: this.foodValidator }],
+          },
         }),
         new RadioInput({
           prop: 'country',
@@ -72,8 +83,8 @@ export default {
             { value: 'jp', label: '日本' },
           ],
         }),
-        new NumberInput({ prop: 'age', label: '年龄', input: { min: 0, max: 1000 } }),
-        new TextAreaInput({ prop: 'remark', label: '备注' }),
+        new NumberInput({ prop: 'age', label: '年龄', input: NumberInput.NATURAL_NUMBER }),
+        new TextAreaInput({ prop: 'remark', label: '备注', maxlength: 50 }),
       ],
     };
   },
@@ -96,6 +107,12 @@ export default {
     },
     onOk() {
       console.log('操作完毕');
+    },
+    foodValidator(rule, value, callback) {
+      if (value.length < 2) {
+        return callback(new Error('至少选择两个'));
+      }
+      return callback();
     },
   },
 };
