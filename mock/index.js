@@ -149,3 +149,95 @@ Mock.mock(wrapUrl('dict'), 'get', (params) => {
     }, {})
   );
 });
+
+const provinces = [
+  { label: '河南', value: 'henan' },
+  { label: '北京', value: 'beijing' },
+  { label: '上海', value: 'shanghai' },
+  { label: '广州', value: 'guangzhou' },
+  { label: '深圳', value: 'shenzhen' },
+];
+
+let personTotal = 25;
+let { rows: personList } = Mock.mock({
+  [`rows|${personTotal}`]: [
+    {
+      id: '@id',
+      name: '@cname',
+      'age|1-50': 1,
+      gender: () => (Math.random() > 0.5 ? 'male' : 'female'),
+      province: () => provinces[Math.floor(Math.random() * provinces.length)].value,
+    },
+  ],
+});
+
+Mock.mock(wrapUrl('person/list'), 'get', (params) => {
+  console.log('获取列表');
+  console.log(params);
+  const query = qs.parse(params.url.split('?')[1]);
+  const { pageNum, pageSize, name, age = 0, gender } = query;
+  const data = personList.filter((person) => {
+    if (name && !person.name.includes(name)) {
+      return false;
+    }
+    if (age && person.age < age) {
+      return false;
+    }
+    if (gender && person.gender !== gender) {
+      return false;
+    }
+    return true;
+  });
+  return wrap({
+    rows: data.slice((pageNum - 1) * pageSize, pageNum * pageSize).map((item) => ({
+      ...item,
+      province:
+        provinces.find((province) => province.value === item.province)?.label || item.province,
+    })),
+    total: data.length,
+  });
+});
+
+Mock.mock(wrapUrl('person'), 'post', (params) => {
+  console.log('新增一条数据');
+  console.log(params);
+  personTotal += 1;
+  const newItem = {
+    id: nanoid(),
+    ...JSON.parse(params.body),
+  };
+  personList.unshift(newItem);
+  return wrap({});
+});
+
+Mock.mock(wrapUrl('person'), 'put', (params) => {
+  const newItem = JSON.parse(params.body);
+  console.log('修改一条数据，', newItem.id);
+  console.log(params);
+  const index = personList.findIndex((item) => item.id === newItem.id);
+  personList[index] = newItem;
+  return wrap({});
+});
+
+Mock.mock(new RegExp(`${config.baseURL}/person/(?!list)`), 'get', (params) => {
+  const id = params.url.split('/').pop();
+  console.log('查询详情', id);
+  console.log(params);
+  return wrap(personList.find((item) => item.id === id));
+});
+
+Mock.mock(wrapUrl('person'), 'delete', (params) => {
+  console.log(params);
+  const idArr = params.url.split('/').pop().split(',');
+  console.log('删除数据，', idArr);
+  let deleteNumber = 0;
+  personList = personList.filter((item) => {
+    if (idArr.includes(item.id)) {
+      deleteNumber += 1;
+      return false;
+    }
+    return true;
+  });
+  personTotal -= deleteNumber;
+  return wrap({});
+});
