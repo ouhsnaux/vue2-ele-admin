@@ -11,7 +11,7 @@ module.exports = {
   },
   chainWebpack: (config) => {
     config.resolve.alias.set('core-js/library/fn', 'core-js/features');
-    config.resolve.alias.set('@', '../../src');
+    config.resolve.alias.set('@', '/src');
   },
   // configureWebpack: {
   //   resolve: {
