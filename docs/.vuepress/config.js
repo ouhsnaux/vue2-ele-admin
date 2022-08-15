@@ -9,13 +9,13 @@ module.exports = {
       lang: 'zh-CN',
     },
   },
-  chainWebpack: (config) => {
-    config.resolve.alias.set('core-js/library/fn', 'core-js/features');
-  },
+  // chainWebpack: (config) => {
+  //   config.resolve.alias.set('core-js/library/fn', 'core-js/features');
+  // },
   configureWebpack: {
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './'),
+        '@': path.resolve(__dirname, '../../src'),
       },
     },
   },

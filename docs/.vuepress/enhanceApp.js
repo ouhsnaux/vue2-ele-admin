@@ -1,6 +1,6 @@
 import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import { formatComponentName } from './utils/index';
+import { formatComponentName } from '@/utils/index';
 import { auth } from './directives';
 import './icon/iconfont';
 
@@ -8,7 +8,7 @@ import '../../mock';
 
 export default ({ Vue }) => {
   Vue.use(Element);
-  const requireComponents = require.context('./components', true, /\.vue$/);
+  const requireComponents = require.context('@/components', true, /\.vue$/);
   requireComponents.keys().forEach((key) => {
     const component = requireComponents(key).default;
     Vue.component(component.name, component);
