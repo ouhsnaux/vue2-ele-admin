@@ -35,12 +35,12 @@ const base = 'person';
 export const extra = generatorExtraButtons(base, [CREATE]);
 
 export const columns = [
-  { prop: 'name', label: '姓名', width: '75px' },
-  {
-    prop: 'gender',
-    label: '性别',
-    width: '75px',
-  },
+  { prop: 'name', label: '姓名' },
+  // {
+  //   prop: 'gender',
+  //   label: '性别',
+  //   width: '75px',
+  // },
   { prop: 'province', label: '省份' },
   { prop: 'age', label: '年龄' },
 ];

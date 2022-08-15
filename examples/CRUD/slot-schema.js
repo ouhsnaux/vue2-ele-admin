@@ -1,13 +1,4 @@
-import {
-  NumberInput,
-  DateInput,
-  SimpleInput,
-  SelectInput,
-  SwitchInput,
-  RadioInput,
-  CheckboxInput,
-  TextAreaInput,
-} from '@/utils/form';
+import { NumberInput, SimpleInput, SelectInput, SwitchInput } from '@/utils/form';
 import { CREATE, READ, UPDATE, DELETE } from '@/const/buttons';
 import { COLUMN_WIDTH_INDEX } from '@/const/table';
 import { generatorExtraButtons, generatorTableButtons } from '@/utils/button';

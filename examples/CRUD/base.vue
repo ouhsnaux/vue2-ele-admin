@@ -1,18 +1,12 @@
 <template>
-  <CRUD
-    baseurl="person"
-    :params="params"
-    :content="content"
-    :detail="detail"
-    :handle-result="handleData"
-  />
+  <CRUD baseurl="person" :params="params" :content="content" :detail="detail" />
 </template>
 
 <script>
 import { queryFields, extra, columns, buttons, detailFields } from './base-schema';
 
 export default {
-  name: 'CRUD',
+  name: 'CRUDBase',
   data() {
     return {
       params: {

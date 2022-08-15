@@ -5,7 +5,7 @@
 ## 基础用法
 
 <div class="demo-content">
-  <CRUD />
+  <CRUDBase />
 </div>
 
 <<< @/examples/CRUD/base.vue
