@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@/*": ["docs/.vuepress/*"]
+      "@/*": ["src/*"]
     }
   },
   "exclude": ["node_modules", "dist"]

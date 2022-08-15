@@ -39,7 +39,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       alias: {
-        map: [['@', './docs/.vuepress']],
+        map: [['@', './src']],
         extensions: ['.vue', '.json', '.js'],
       },
     },
