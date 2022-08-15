@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  base: '/vue2-ele-admin/',
   title: '后台管理系统组件库',
   plugins: ['demo-container'],
   locales: {
