@@ -9,10 +9,10 @@ module.exports = {
       lang: 'zh-CN',
     },
   },
-  chainWebpack: (config) => {
-    config.resolve.alias.set('core-js/library/fn', 'core-js/features');
-    // config.resolve.alias.set('@', '/src');
-  },
+  // chainWebpack: (config) => {
+  //   // config.resolve.alias.set('core-js/library/fn', 'core-js/features');
+  //   // config.resolve.alias.set('@', '/src');
+  // },
   configureWebpack: {
     resolve: {
       extensions: ['.js', '.jsx', '.vue', '.json', '.styl'],
