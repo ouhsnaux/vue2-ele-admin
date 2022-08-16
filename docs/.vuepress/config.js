@@ -10,17 +10,17 @@ module.exports = {
     },
   },
   chainWebpack: (config) => {
-    // config.resolve.alias.set('core-js/library/fn', 'core-js/features');
-    config.resolve.alias.set('@', '/src');
+    config.resolve.alias.set('core-js/library/fn', 'core-js/features');
+    // config.resolve.alias.set('@', '/src');
   },
-  // configureWebpack: {
-  //   resolve: {
-  //     extensions: ['.js', '.jsx', '.vue', '.json', '.styl'],
-  //     alias: {
-  //       '@': path.resolve(__dirname, '../../src'),
-  //     },
-  //   },
-  // },
+  configureWebpack: {
+    resolve: {
+      extensions: ['.js', '.jsx', '.vue', '.json', '.styl'],
+      alias: {
+        '@': path.resolve(__dirname, '../../src'),
+      },
+    },
+  },
   themeConfig: {
     searchMaxSuggestions: 10,
     nextLinks: true,
