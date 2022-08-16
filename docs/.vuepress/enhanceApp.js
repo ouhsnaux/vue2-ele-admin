@@ -8,7 +8,6 @@ import '../../mock';
 
 export default async ({ Vue, isServer }) => {
   Vue.use(Element);
-  console.log(isServer);
   if (!isServer) {
     const requireComponents = await require.context('@/components', true, /\.vue$/);
     requireComponents.keys().forEach((key) => {
@@ -22,7 +21,7 @@ export default async ({ Vue, isServer }) => {
       // eslint-disable-next-line
       Vue.component(formatComponentName(key), component);
     });
-  }
 
-  Vue.directive('auth', auth);
+    Vue.directive('auth', auth);
+  }
 };
