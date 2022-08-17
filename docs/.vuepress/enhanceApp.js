@@ -4,7 +4,7 @@ import { formatComponentName } from '@/utils/index';
 import { auth } from './directives';
 // import './icon/iconfont';
 
-import '../../mock';
+// import '../../mock';
 
 export default async ({ Vue }) => {
   Vue.use(Element);
