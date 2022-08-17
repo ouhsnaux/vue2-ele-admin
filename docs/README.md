@@ -16,6 +16,11 @@
 
 ## TODO
 
+* 发布问题
+  * mock
+* 文档问题
+  * demo-container 不支持import
+
 目前绝大部分组件属性、事件和插槽都透传到 `Element UI` 组件内部。需要完善的有：
 
 1. 组件方法。通过 `refs` 调用 `Element UI` 组件方法不完整，只添加了当前用到的。
