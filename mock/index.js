@@ -3,8 +3,6 @@ import { nanoid } from 'nanoid';
 import Mock from 'mockjs';
 import qs from 'qs';
 
-// const Mock = require('mockjs');
-
 Mock.setup({ timeout: '100-1000' });
 
 const wrap = (data) => ({
