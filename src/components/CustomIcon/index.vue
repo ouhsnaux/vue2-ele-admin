@@ -16,6 +16,9 @@ export default {
       return this.icon.startsWith('el-icon-');
     },
   },
+  mounted() {
+    import('./icon/iconfont');
+  },
 };
 </script>
 

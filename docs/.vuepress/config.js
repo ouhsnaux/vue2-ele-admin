@@ -4,6 +4,7 @@ module.exports = {
   base: '/vue2-ele-admin/',
   title: '后台管理系统组件库',
   plugins: ['demo-container'],
+  head: [['link', { rel: 'shortcut icon', href: './favicon.ico' }]],
   locales: {
     '/': {
       lang: 'zh-CN',
