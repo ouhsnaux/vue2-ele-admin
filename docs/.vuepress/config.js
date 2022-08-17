@@ -9,18 +9,18 @@ module.exports = {
       lang: 'zh-CN',
     },
   },
-  // chainWebpack: (config) => {
-  //   // config.resolve.alias.set('core-js/library/fn', 'core-js/features');
-  //   // config.resolve.alias.set('@', '/src');
-  // },
   configureWebpack: {
     resolve: {
       extensions: ['.js', '.jsx', '.vue', '.json', '.styl'],
       alias: {
         '@': path.resolve(__dirname, '../../src'),
+        'core-js/library/fn': 'core-js/features',
       },
     },
   },
+  // chainWebpack: (config) => {
+  //   config.resolve.alias.set('core-js/library/fn', 'core-js/features');
+  // },
   themeConfig: {
     searchMaxSuggestions: 10,
     nextLinks: true,
