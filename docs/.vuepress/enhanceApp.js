@@ -6,20 +6,36 @@ import './icon/iconfont';
 
 import '../../mock';
 
-export default async ({ Vue, isServer }) => {
+export default async ({ Vue }) => {
   Vue.use(Element);
-  const requireComponents = await require.context('@/components', true, /\.vue$/);
-  requireComponents.keys().forEach((key) => {
-    const component = requireComponents(key).default;
-    Vue.component(component.name, component);
-  });
+  const requireComponents = require.context('@/components', true, /\.vue$/);
+  const keys = requireComponents.keys();
+  for (let i = 0; i < keys.length; i++) {
+    await import(`../../src/components/${keys[i].slice(2)}`).then((module) => {
+      // console.log(module);
+      const component = module.default;
+      Vue.component(component.name, component);
+      // Vue.use(module.default);
+    });
+  }
 
-  const requireExamples = await require.context('../../examples', true, /\.vue$/);
-  requireExamples.keys().forEach((key) => {
-    const component = requireExamples(key).default;
-    // eslint-disable-next-line
-      Vue.component(formatComponentName(key), component);
-  });
+  const requireExamples = require.context('../../examples', true, /\.vue$/);
+  const exampleKeys = requireExamples.keys();
+  for (let i = 0; i < exampleKeys.length; i++) {
+    await import(`../../examples/${exampleKeys[i].slice(2)}`).then((module) => {
+      console.log(module);
+      // console.log(component.name);
+      const component = module.default;
+      Vue.component(formatComponentName(exampleKeys[i]), component);
+    });
+  }
+  // requireExamples.keys().forEach((key) => {
+  //   console.log(key);
+
+  //   const component = requireExamples(key).default;
+  //   // eslint-disable-next-line
+  //     Vue.component(formatComponentName(key), component);
+  // });
 
   Vue.directive('auth', auth);
 };
