@@ -13,7 +13,7 @@ module.exports = {
     resolve: {
       extensions: ['.js', '.jsx', '.vue', '.json', '.styl'],
       alias: {
-        '@': path.resolve(__dirname, '/src'),
+        '@': path.resolve(__dirname, '../../src'),
         'core-js/library/fn': 'core-js/features',
       },
     },

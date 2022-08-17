@@ -8,20 +8,18 @@ import '../../mock';
 
 export default async ({ Vue, isServer }) => {
   Vue.use(Element);
-  if (!isServer) {
-    const requireComponents = await require.context('@/components', true, /\.vue$/);
-    requireComponents.keys().forEach((key) => {
-      const component = requireComponents(key).default;
-      Vue.component(component.name, component);
-    });
+  const requireComponents = await require.context('@/components', true, /\.vue$/);
+  requireComponents.keys().forEach((key) => {
+    const component = requireComponents(key).default;
+    Vue.component(component.name, component);
+  });
 
-    const requireExamples = await require.context('../../examples', true, /\.vue$/);
-    requireExamples.keys().forEach((key) => {
-      const component = requireExamples(key).default;
-      // eslint-disable-next-line
+  const requireExamples = await require.context('../../examples', true, /\.vue$/);
+  requireExamples.keys().forEach((key) => {
+    const component = requireExamples(key).default;
+    // eslint-disable-next-line
       Vue.component(formatComponentName(key), component);
-    });
+  });
 
-    Vue.directive('auth', auth);
-  }
+  Vue.directive('auth', auth);
 };
