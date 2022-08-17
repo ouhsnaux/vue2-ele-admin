@@ -2,7 +2,7 @@ import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import { formatComponentName } from '@/utils/index';
 import { auth } from './directives';
-import './icon/iconfont';
+// import './icon/iconfont';
 
 import '../../mock';
 
