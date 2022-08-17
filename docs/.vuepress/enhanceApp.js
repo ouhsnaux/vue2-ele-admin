@@ -30,5 +30,5 @@ export default async ({ Vue }) => {
   //   });
   // }
 
-  Vue.directive('auth', auth);
+  // Vue.directive('auth', auth);
 };
